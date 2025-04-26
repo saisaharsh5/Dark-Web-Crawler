@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Onion Site Details bc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-8">
+        <h2 class="text-yellow-400 text-2xl mb-4 text-center">Onion Site Details</h2>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <p><strong>URL:</strong> <a href="{{ site.url }}" class="text-yellow-400 underline">{{ site.url }}</a></p>
+            <p><strong>Extracted Text:</strong> {{ site.extracted_text }}</p>
+            <p><strong>Hyperlinks:</strong></p>
+            <ul class="list-disc pl-6 text-gray-300">
+                {% for link in site.hyperlinks %}
+                    <li><a href="{{ link }}" class="text-yellow-400 underline">{{ link }}</a></li>
+                {% endfor %}
+            </ul>
+            {% if site.snapshot %}
+            <img src="{{ request.scheme }}://{{ request.get_host }}/{{ site.snapshot }}" class="rounded-lg w-full" alt="Snapshot">
+        {% else %}
+            <p class="text-gray-400">No Snapshot Available</p>
+        {% endif %}
+        
+        
+
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 Darkweb Crawler</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="text-white bg-gray-900 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-md py-6">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-bold tracking-tight">🌐 Darkweb Crawler</h1>
+            <p class="text-gray-400 hidden md:block">Extract, analyze, and categorize darkweb content</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-900 shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <ul class="flex flex-wrap justify-center py-3 space-x-4 md:space-x-6">
+                <li><a href="{% url 'CrawlWeb' %}" class="px-4 py-2 rounded-lg text-base font-medium transition duration-200 {% if current_view == 'CrawlWeb' %}bg-blue-500 text-white{% else %}text-gray-300 hover:bg-gray-700{% endif %}">Crawl Darkweb</a></li>
+                <li><a href="{% url 'TextExtraction' %}" class="px-4 py-2 rounded-lg text-base font-medium transition duration-200 {% if current_view == 'TextExtraction' %}bg-blue-500 text-white{% else %}text-gray-300 hover:bg-gray-700{% endif %}">Text Extraction</a></li>
+                <li><a href="{% url 'Category' %}" class="px-4 py-2 rounded-lg text-base font-medium transition duration-200 {% if current_view == 'Category' %}bg-blue-500 text-white{% else %}text-gray-300 hover:bg-gray-700{% endif %}">Categorization</a></li>
+                <li><a href="{% url 'MostWords' %}" class="px-4 py-2 rounded-lg text-base font-medium transition duration-200 {% if current_view == 'MostWords' %}bg-blue-500 text-white{% else %}text-gray-300 hover:bg-gray-700{% endif %}">Frequent Words</a></li>
+                <li><a href="{% url 'dashboard' %}" class="hover:text-yellow-400">Dashboard</a></li>
+                <li><a href="{% url 'index' %}" class="px-4 py-2 rounded-lg text-base font-medium transition duration-200 text-red-400 hover:bg-red-900">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main class="container mx-auto my-10 px-6">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6">
+
+            <!-- Section Header -->
+            <div class="bg-gray-700 p-5 rounded-lg mb-6 text-center">
+                <h2 class="text-2xl font-semibold">
+                    {% if current_view == 'TextExtraction' %}
+                        📄 Extracted Text
+                    {% elif current_view == 'Category' %}
+                        📊 Categorization Analysis
+                    {% elif current_view == 'MostWords' %}
+                        🔤 Frequent Words
+                    {% else %}
+                        🕵️ Crawled Data Overview
+                    {% endif %}
+                </h2>
+            </div>
+
+            <!-- Onion Links Table -->
+            {% if current_view == 'CrawlWeb' or current_view == None %}
+            <div class="p-6">
+                <h3 class="text-xl font-medium mb-4 text-gray-200">🔗 Discovered Onion Links</h3>
+                <div class="overflow-x-auto rounded-lg shadow-md">
+                    <table class="w-full text-left table-auto">
+                        <thead class="bg-gray-700 text-gray-300">
+                            <tr>
+                                <th class="px-4 py-3 border-b border-gray-600">#</th>
+                                <th class="px-4 py-3 border-b border-gray-600">Onion URL</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-600">
+                            {% for link in extracted_links %}
+                            <tr class="hover:bg-gray-700 transition duration-200">
+                                <td class="px-4 py-3">{{ link.index }}</td>
+                                <td class="px-4 py-3 break-words">
+                                    <a href="{{ link.url }}" class="text-blue-400 hover:text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer">
+                                        {{ link.url }}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="2" class="px-4 py-3 text-center text-gray-400">No links extracted yet</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Extracted Text Content -->
+            {% if current_view == 'TextExtraction' or data %}
+            <div class="p-6 border-t border-gray-600">
+                <h3 class="text-xl font-medium mb-4 text-gray-200 flex items-center">
+                    <i class="fas fa-file-alt text-blue-400 mr-2"></i> Extracted Text Content
+                </h3>
+                
+                <div class="bg-gray-900 text-gray-300 p-6 rounded-lg shadow-md max-h-96 overflow-y-auto break-words">
+                    {% if data %}
+                        <div class="prose prose-invert max-w-none leading-relaxed space-y-4">
+                            {{ data|linebreaks }}
+                        </div>
+                    {% else %}
+                        <p class="text-center text-gray-400 py-8">No text extracted yet. Crawl content first.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+
+            <!-- Categorization Graph -->
+            {% if current_view == 'Category' %}
+<div class="p-6 border-t border-gray-600">
+    <h3 class="text-xl font-medium mb-4 text-gray-200 flex items-center">
+        <i class="fas fa-chart-pie text-blue-400 mr-2"></i> Categorization Analysis
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Category Distribution (Pie Chart) -->
+        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
+            <h4 class="text-lg font-semibold text-center text-gray-300">Category Distribution</h4>
+            <canvas id="categoryChart"></canvas>
+        </div>
+
+        <!-- Sentiment Analysis (Gauge Chart) -->
+        <div class="bg-gray-900 p-4 rounded-lg shadow-md">
+            <h4 class="text-lg font-semibold text-center text-gray-300">Sentiment Analysis</h4>
+            <canvas id="sentimentChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Named Entity Recognition (NER Breakdown) -->
+    <div class="mt-6 bg-gray-900 p-4 rounded-lg shadow-md">
+        <h4 class="text-lg font-semibold text-center text-gray-300">NER Breakdown</h4>
+        <canvas id="nerChart"></canvas>
+    </div>
+</div>
+{% endif %}
+{% if current_view == 'MostWords' %}
+<div class="p-6 border-t border-gray-600">
+    <h3 class="text-xl font-medium mb-4 text-gray-200 flex items-center">
+        <i class="fas fa-font text-blue-400 mr-2"></i> Frequent Words List
+    </h3>
+
+
+    <div class="bg-gray-900 p-6 rounded-lg shadow-md">
+        {% if words_counts %}
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-700 text-gray-300">
+                    <tr>
+                        <th class="px-4 py-3 border-b border-gray-600">Word</th>
+                        <th class="px-4 py-3 border-b border-gray-600">Frequency</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-600">
+                    {% for item in words_counts %}
+                    <tr class="hover:bg-gray-700 transition duration-200">
+                        <td class="px-4 py-3">{{ item.word }}</td>
+                        <td class="px-4 py-3">{{ item.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center text-gray-400 py-8">No word frequency data available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+
+        </div>
+    </main>
+ 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("{% url 'category_analysis' %}")
+    .then(response => response.json())
+    .then(data => {
+        // Pie Chart: Category Distribution
+        const ctxCategory = document.getElementById("categoryChart").getContext("2d");
+        new Chart(ctxCategory, {
+            type: "pie",
+            data: {
+                labels: data.category_distribution.map(item => item.category),
+                datasets: [{
+                    data: data.category_distribution.map(item => item.count),
+                    backgroundColor: ["#6366F1", "#EF4444", "#10B981", "#F59E0B", "#8B5CF6"]
+                }]
+            }
+        });
+
+        // Sentiment Analysis (Gauge Chart)
+        const ctxSentiment = document.getElementById("sentimentChart").getContext("2d");
+        new Chart(ctxSentiment, {
+            type: "bar",
+            data: {
+                labels: data.sentiment_analysis.map(item => item.sentiment),
+                datasets: [{
+                    data: data.sentiment_analysis.map(item => item.count),
+                    backgroundColor: ["#10B981", "#F59E0B", "#EF4444"]
+                }]
+            },
+            options: {
+                indexAxis: "y",
+                scales: {
+                    x: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Stacked Bar Chart: NER Breakdown
+        const ctxNER = document.getElementById("nerChart").getContext("2d");
+        new Chart(ctxNER, {
+            type: "bar",
+            data: {
+                labels: data.ner_breakdown.map(item => item.entity),
+                datasets: [{
+                    label: "Entities Found",
+                    data: data.ner_breakdown.map(item => item.count),
+                    backgroundColor: "#3B82F6"
+                }]
+            },
+            options: {
+                scales: {
+                    x: { beginAtZero: true }
+                }
+            }
+        });
+    });
+});
+</script>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center p-6 mt-6 shadow-inner">
+        <div class="container mx-auto">
+            <p class="text-gray-400">&copy; 2025 Darkweb Crawler. All rights reserved.</p>
+            <p class="text-sm text-gray-500 mt-2">For research and educational purposes only.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login - Dark Web Crawler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex h-screen justify-center items-center">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
+            <h2 class="text-yellow-400 text-2xl mb-4 text-center">Login</h2>
+            <form method="POST" action="{% url 'UserLoginAction' %}" class="space-y-4">
+                {% csrf_token %}
+                <input type="text" name="t1" placeholder="Username" class="w-full p-2 bg-gray-700 rounded">
+                <input type="password" name="t2" placeholder="Password" class="w-full p-2 bg-gray-700 rounded">
+                <button type="submit" class="w-full bg-yellow-400 p-2 rounded font-bold text-black hover:bg-yellow-500">
+                    Login
+                </button>
+            </form>
+            <p class="text-center mt-4">
+                Don't have an account? 
+                <a href="{% url 'register' %}" class="text-yellow-400 hover:underline">Register here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
