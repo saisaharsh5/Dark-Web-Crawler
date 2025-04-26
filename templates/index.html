@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Dark web Crawling</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+<!-- Navbar -->
+<nav class="bg-black bg-opacity-80 fixed w-full z-50 backdrop-filter backdrop-blur-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <a href="{% url 'index' %}" class="flex items-center">
+                        <i class="fas fa-eye-slash text-indigo-500 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl"> Dark web Crawling</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex items-center">
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'index' %}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white">Home</a>
+                      
+                    </div>
+                </div>
+                <div class="ml-4 flex items-center">
+                    <a href="{% url 'UserLogin' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out mr-2">Login</a>
+                    <a href="{% url 'register' %}" class="bg-transparent border border-indigo-600 text-indigo-500 hover:bg-indigo-700 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out">Register</a>
+                </div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+                <button type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-image h-screen flex items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
+            <span class="block"> Dark web</span>
+            <span class="block text-indigo-500">Crawling</span>
+        </h1>
+        <p class="mt-6 max-w-lg mx-auto text-xl text-gray-300 sm:max-w-3xl">
+            Secure, anonymous, and comprehensive tools for investigators, researchers, and cybersecurity professionals.
+        </p>
+        <a href="{% url 'register' %}" class="inline-block px-8 py-3 text-lg mt-12 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105">
+            Get Started
+        </a>
+             
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-16 bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                Secure Investigation Tools
+            </h2>
+            <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                Our platform provides advanced tools for secure darkweb investigation and analysis.
+            </p>
+        </div>
+
+        <div class="mt-12 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Feature 1 -->
+            <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden feature-card">
+                <div class="p-6">
+                    <div class="text-indigo-500 text-4xl mb-4">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">Advanced Crawling</h3>
+                    <p class="mt-2 text-gray-300">
+                        Safely navigate and index .onion domains with our automated crawling technology.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden feature-card">
+                <div class="p-6">
+                    <div class="text-indigo-500 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">Anonymous Access</h3>
+                    <p class="mt-2 text-gray-300">
+                        Multiple layers of protection ensure your investigations remain completely anonymous.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-gray-900 rounded-lg shadow-lg overflow-hidden feature-card">
+                <div class="p-6">
+                    <div class="text-indigo-500 text-4xl mb-4">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">Data Analysis</h3>
+                    <p class="mt-2 text-gray-300">
+                        Powerful analytics tools to identify patterns and connections in darkweb content.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div class="mt-12 border-t border-gray-800 pt-8">
+            <p class="text-gray-400 text-sm text-center">&copy; 2025 DarkIntel Technologies. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JS for mobile menu toggle -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.querySelector('button');
+    const mobileMenu = document.createElement('div');
+    mobileMenu.className = 'md:hidden';
+    mobileMenu.innerHTML = `
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 absolute w-full">
+            <a href="{% url 'index' %}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Home</a>
+           
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <a href="{% url 'UserLogin' %}" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 mb-2">Login</a>
+                <a href="{% url 'register' %}" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-500 bg-transparent border border-indigo-600 hover:bg-indigo-700 hover:text-white">Register</a>
+            </div>
+        </div>
+    `;
+    mobileMenu.style.display = 'none';
+    document.body.appendChild(mobileMenu);
+    
+    mobileMenuButton.addEventListener('click', () => {
+        if (mobileMenu.style.display === 'none') {
+            mobileMenu.style.display = 'block';
+        } else {
+            mobileMenu.style.display = 'none';
+        }
+    });
+});
+</script>
+
+</body>
+</html>
