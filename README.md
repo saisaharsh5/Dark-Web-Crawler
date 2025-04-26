@@ -24,9 +24,35 @@
 
 <a name="overview"></a>
 ## 🚀 Overview
-A **real-time Dark Web crawling & data-extraction framework** that anonymously scrapes `.onion` domains via **Tor**, processes content with **BERT-powered NLP**, and presents investigators with an interactive dashboard for threat intelligence.
+A **real-time Dark Web crawling & data-extraction framework** that anonymously scrapes `.onion` domains through **Tor**, enriches the raw HTML with **BERT-powered NLP**, and serves analysts an interactive dashboard for threat intelligence.
 
 > **Focus:** Cyber-crime tracking • Fraud marketplaces • Threat hunting • Academic research
+
+### Why this project matters 🔍
+- **Rapid intelligence, zero attribution** – every request is proxied via rotating Tor circuits, safeguarding investigator privacy while keeping crawl speeds high with asynchronous I/O.  
+- **One-stop evidence pipeline** – from first HTTP GET to cryptographically-hashed snapshot and classified text, the system preserves a full chain-of-custody for courtroom-ready artefacts.  
+- **Domain-agnostic NLP engine** – custom BERT fine-tuning lets you switch from cyber-crime to extremism or CSAM detection simply by swapping label sets, not code.  
+- **Pluggable search-engine adapters** – Ahmia, Phobos, Haystak or any niche onion indexer can be queried in parallel through a unified interface.  
+- **Analyst-centric UX** – powerful query language, saved search alerts, and drill-down charts (e.g., top entities, bursting keywords, hyperlink graphs) slash investigation time.  
+- **Security baked-in** – RBAC, AES-256 database at rest, HTTPS via Nginx-→Gunicorn-→Django, and optional step-up MFA for privileged roles.  
+
+### High-level workflow 📈
+1. **Seed & Crawl**  
+   - Users enter keywords or seed URLs.  
+   - Asynchronous crawler resolves `.onion` addresses through Tor, obeys robots.txt where present, and streams HTML to the pipeline.  
+2. **Parse & Clean**  
+   - BeautifulSoup removes boilerplate; readability filters retain main content.  
+   - Media assets (images, PDFs) are downloaded, hashed, and stored with metadata.  
+3. **Enrich & Classify**  
+   - SpaCy extracts entities; BERT classifies the document into threat categories.  
+   - Language-agnostic tokenisation enables multilingual support (EN, RU, ZH, ES…).  
+4. **Store & Secure**  
+   - Data lands in SQLite/PostgreSQL (swap with MongoDB if schemaless flexibility is preferred).  
+   - Full-text indexes power lightning-fast searches; AES-256 encrypts sensitive fields.  
+5. **Visualise & Act**  
+   - Django + React frontend renders dashboards, link graphs, word clouds, and evidence timelines.  
+   - Analysts can export reports, share saved views, or trigger downstream playbooks (e.g., alert a SIEM).  
+
 
 ---
 
@@ -44,13 +70,6 @@ A **real-time Dark Web crawling & data-extraction framework** that anonymously s
 | 🧠 **NLP Categoriser** | 🛡️ **RBAC & Encryption** |
 |-----------------------|-------------------------|
 | BERT + SpaCy pipeline sorts data into *Cybercrime*, *Fraud*, *Illicit Markets* & more. | AES-encrypted DB + role-based access control for sensitive intel. |
-
----
-
-
-<a name="screenshots--gifs"></a>
-## 🎥 Image
-<img src="<img src="" alt="Dark web Crawling  | Product Hunt" style="width: 400px; height: 200px;" width="200" height="100" /></a></h1>" alt="Dark web Crawling  | Product Hunt" style="width: 400px; height: 200px;" width="200" height="100" /></a></h1>
 
 ---
 
