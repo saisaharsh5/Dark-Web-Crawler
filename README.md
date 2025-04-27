@@ -15,12 +15,8 @@
   <img src="https://img.shields.io/badge/SQLite-DB-lightgrey?style=for-the-badge&logo=sqlite"/>
 </div>
 
-<!-- Optional animated contribution snake -->
-<!-- <img src="https://github.com/saisaharsh5/saisaharsh5/blob/output/github-contribution-grid-snake.svg" alt="snake"> -->
-</div>
-
-
 ---
+
 
 <a name="overview"></a>
 ## 🚀 Overview
