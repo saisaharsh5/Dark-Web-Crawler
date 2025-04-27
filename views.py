@@ -126,7 +126,7 @@ from Crawler_frontend.models import OnionSite  # Ensure model is imported
 from google import genai
 
 # Configure Gemini API
-GEMINI_API_KEY = "AIzaSyAdl3L-bN1HmBKExX9--dp2FzHKWE9vNns"  # Replace with your actual Gemini API Key
+GEMINI_API_KEY = ""  # Replace with your actual Gemini API Key
 
 def format_text_with_gemini(text):
     """Use Gemini AI to structure and format the extracted dark web text."""
